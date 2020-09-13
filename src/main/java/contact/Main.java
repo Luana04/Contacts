@@ -1,12 +1,14 @@
 package contact;
 
 import com.github.javafaker.Faker;
+import contact.dataBase.Contact;
 import contact.dataBase.DataBase;
 import contact.utilities.App;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Set;
 
 public class Main {
 
@@ -21,10 +23,10 @@ public class Main {
             System.out.println("File " + FILE_NAME + " not found!");
         }
 
+        Set<Contact> contacts = DataBase.getDataBase();
+        DataBase.printDataBase(contacts);
 
-        DataBase.printDataBase(DataBase.getDataBase());
-
-        App.brain();
+        App.brain(contacts);
 
 //        dataBase.printList(DataBase.getDataBase());
 

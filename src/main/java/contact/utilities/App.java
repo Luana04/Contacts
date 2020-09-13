@@ -1,11 +1,14 @@
 package contact.utilities;
 
+import contact.dataBase.Contact;
+
 import java.util.Scanner;
+import java.util.Set;
 
 public class App {
 
     static Scanner scn = new Scanner(System.in);
-    public static void brain(){
+    public static void brain(Set<Contact> contacts){
         boolean isInputInvalid = true;
         String input;
 
@@ -24,7 +27,7 @@ public class App {
 
         switch (input){
             case "1":
-                Options.seeDetails();
+                Options.seeDetails(contacts);
                 break;
             case "2":
                 Options.editContact();

@@ -12,11 +12,10 @@ public class Options {
         boolean isInputInvalid = true;
         boolean isBooleanTrue = true;
         String input;
-        String nameWithoutSpaces;
         String name;
         int nameLength;
         int intInput;
-        Contact contact = null;
+        Contact contact;
         List<Contact> contactList = new ArrayList<>();
         Iterator<Contact> iterator = contacts.iterator();
 
@@ -41,7 +40,6 @@ public class Options {
 
         intInput = Integer.parseInt(input);
 
-        System.out.println("");
 
         contact = contactList.get(intInput);
         name = contact.getFullName();
@@ -58,7 +56,7 @@ public class Options {
             }
         }
 
-        System.out.println("|  Name:          " + name);
+        System.out.println("\n|  Name:          " + name);
         System.out.println("|  Phone Number:  " + contact.getPhoneNumber());
         System.out.println("|  Mail:          " + contact.getEmail());
         System.out.println("|  Adress:        " + contact.getAddress());

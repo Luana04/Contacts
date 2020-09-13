@@ -1,6 +1,5 @@
 package contact;
 
-import com.github.javafaker.Faker;
 import contact.dataBase.Contact;
 import contact.dataBase.DataBase;
 import contact.utilities.App;
@@ -28,7 +27,6 @@ public class Main {
 
         App.brain(contacts);
 
-//        dataBase.printList(DataBase.getDataBase());
 
 
 

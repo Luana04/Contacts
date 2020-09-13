@@ -1,12 +1,5 @@
 package contact.dataBase;
 
-import com.github.javafaker.Address;
-import com.github.javafaker.Beer;
-import com.github.javafaker.FunnyName;
-
-import java.util.TreeMap;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 public class Contact {
 

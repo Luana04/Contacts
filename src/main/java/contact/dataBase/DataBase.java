@@ -12,12 +12,12 @@ public class DataBase {
         Faker faker = new Faker();
         Set<Contact> contacts = new HashSet<>();
         int phone;
-        String phoneString;
-        boolean isInvalid = true;
+        StringBuilder phoneString;
+        boolean isInvalid;
 
         for (int i = 0; i < 33; i++) {
             isInvalid = true;
-            phoneString = "07";
+            phoneString = new StringBuilder("07");
             Contact contact = new Contact("A", "B", "C", "D");
             contact.setFullName(faker.funnyName().name());
             contact.setEmail("fakerDoesNotHave@anyMail.com");
@@ -25,16 +25,16 @@ public class DataBase {
             do {
                 phone = rnd.nextInt(99999999);
                 if (phone > 10000000){
-                    phoneString += Integer.toString(phone);
-                    if (phoneString.toCharArray().length == 10){
+                    phoneString.append(phone);
+                    if (phoneString.toString().toCharArray().length == 10){
                         isInvalid = false;
                     }
                 }
             }
             while (isInvalid);
 
-            phoneString = diviseDigits(phoneString);
-            contact.setPhoneNumber(phoneString);
+            phoneString = new StringBuilder(diviseDigits(phoneString.toString()));
+            contact.setPhoneNumber(phoneString.toString());
 
             contacts.add(contact);
         }
@@ -70,7 +70,7 @@ public class DataBase {
     }
 
     public static String diviseDigits(String number){
-        String newNumber = "";
+        StringBuilder newNumber = new StringBuilder();
         List<Character> digits = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
@@ -90,17 +90,17 @@ public class DataBase {
         }
 
 
-        for (int i = 0; i < digits.size(); i++) {
-            newNumber += digits.get(i);
+        for (Character digit : digits) {
+            newNumber.append(digit);
         }
 
-        return newNumber;
+        return newNumber.toString();
     }
 
 
     public static int getTheBiggestName(Set<Contact> contacts){
         int maxLetters = 0;
-        Contact contact = null;
+        Contact contact;
         Iterator<Contact> iterator = contacts.iterator();
         List<Contact> contactList = new ArrayList<>();
         for (int i = 0; i < contacts.size(); i++) {
@@ -108,9 +108,9 @@ public class DataBase {
             contactList.add(contact);
         }
 
-        for (int i = 0; i < contactList.size(); i++) {
-            contact = contactList.get(i);
-            if (contact.getFullName().toCharArray().length > maxLetters){
+        for (Contact value : contactList) {
+            contact = value;
+            if (contact.getFullName().toCharArray().length > maxLetters) {
                 maxLetters = contact.getFullName().toCharArray().length;
             }
         }

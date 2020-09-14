@@ -11,10 +11,11 @@ public class Options {
     public static void seeDetails(Set<Contact> contacts) {
         boolean isInputInvalid = true;
         boolean isBooleanTrue = true;
+        boolean isAnyError = false;
         String input;
         String name;
         int nameLength;
-        int intInput;
+        int intInput = 0;
         Contact contact;
         List<Contact> contactList = new ArrayList<>();
         Iterator<Contact> iterator = contacts.iterator();
@@ -25,33 +26,45 @@ public class Options {
         }
 
         System.out.println("\n|  Enter the index of the contact!");
-        System.out.print("|  Your answer: ");
+
+
 
         do {
-            input = scn.next();
-            if (Integer.parseInt(input) > 0 && Integer.parseInt(input) <= contacts.size()){
-                isInputInvalid = false;
-            }
-            else {
-                System.out.print("|  Please enter a valid input: ");
+            try {
+                do {
+                    if (isAnyError){
+                        System.out.print("|  Please enter a valid input: ");
+                    }
+                    else {
+                        System.out.print("|  Your answer: ");
+                    }
+                    input = scn.next();
+                    if (Integer.parseInt(input) > 0 && Integer.parseInt(input) <= contacts.size()) {
+                        isInputInvalid = false;
+                    } else {
+                        System.out.print("\n|  Please enter a valid input\n");
+                    }
+                }
+                while (isInputInvalid);
+                isAnyError = false;
+                intInput = Integer.parseInt(input);
+            } catch (NumberFormatException exception) {
+                isAnyError = true;
             }
         }
-        while (isInputInvalid);
+        while (isAnyError);
 
-        intInput = Integer.parseInt(input);
-
-
+        intInput--;
         contact = contactList.get(intInput);
         name = contact.getFullName();
         nameLength = name.length();
         nameLength--;
 
-        while (isBooleanTrue){
-            if (contact.getFullName().charAt(nameLength) == ' '){
+        while (isBooleanTrue) {
+            if (contact.getFullName().charAt(nameLength) == ' ') {
                 name = name.substring(0, name.length() - 1);
                 nameLength--;
-            }
-            else {
+            } else {
                 isBooleanTrue = false;
             }
         }
@@ -67,17 +80,19 @@ public class Options {
 
         do {
             input = scn.next();
-            if (input.equalsIgnoreCase("yes") || input.equalsIgnoreCase("no")){
+            if (input.equalsIgnoreCase("yes") || input.equalsIgnoreCase("no")) {
                 isInputInvalid = false;
-            }
-            else {
+            } else {
                 System.out.print("|  Please enter a valid input: ");
             }
         }
         while (isInputInvalid);
 
-        if (input.equalsIgnoreCase("yes")){
+        if (input.equalsIgnoreCase("yes")) {
             seeDetails(contacts);
+        }
+        else {
+            App.brain(contacts);
         }
     }
 
@@ -85,11 +100,15 @@ public class Options {
 
     }
 
-    public static void addAContact(){
+    public static void addAContact() {
 
     }
 
-    public static void deleteAContact(){
+    public static void deleteAContact() {
+
+    }
+
+    public static void closeApp(){
 
     }
 

@@ -8,7 +8,8 @@ import java.util.Set;
 public class App {
 
     static Scanner scn = new Scanner(System.in);
-    public static void brain(Set<Contact> contacts){
+
+    public static void brain(Set<Contact> contacts) {
         boolean isInputInvalid = true;
         String input;
 
@@ -16,16 +17,16 @@ public class App {
         do {
             input = scn.next();
             if (input.equalsIgnoreCase("1") || input.equalsIgnoreCase("2")
-            || input.equalsIgnoreCase("3") || input.equalsIgnoreCase("4")){
+                    || input.equalsIgnoreCase("3") || input.equalsIgnoreCase("4")
+                    || input.equalsIgnoreCase("5")) {
                 isInputInvalid = false;
-            }
-            else {
+            } else {
                 System.out.print("Please enter a valid input: ");
             }
         }
         while (isInputInvalid);
 
-        switch (input){
+        switch (input) {
             case "1":
                 Options.seeDetails(contacts);
                 break;
@@ -37,6 +38,9 @@ public class App {
                 break;
             case "4":
                 Options.deleteAContact();
+                break;
+            case "5":
+                Options.closeApp();
                 break;
         }
     }

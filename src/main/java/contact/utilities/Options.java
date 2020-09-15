@@ -1,6 +1,7 @@
 package contact.utilities;
 
 import contact.dataBase.Contact;
+import contact.dataBase.DataBase;
 
 import java.util.*;
 
@@ -56,23 +57,7 @@ public class Options {
 
         intInput--;
         contact = contactList.get(intInput);
-        name = contact.getFullName();
-        nameLength = name.length();
-        nameLength--;
-
-        while (isBooleanTrue) {
-            if (contact.getFullName().charAt(nameLength) == ' ') {
-                name = name.substring(0, name.length() - 1);
-                nameLength--;
-            } else {
-                isBooleanTrue = false;
-            }
-        }
-
-        System.out.println("\n|  Name:          " + name);
-        System.out.println("|  Phone Number:  " + contact.getPhoneNumber());
-        System.out.println("|  Mail:          " + contact.getEmail());
-        System.out.println("|  Adress:        " + contact.getAddress());
+        Messages.printContactDetails(contact);
 
         System.out.println("\n\n|  Do you want to search for another contact?");
         System.out.print("|  Your answer: ");
@@ -96,9 +81,119 @@ public class Options {
         }
     }
 
-    public static void editContact() {
+    public static void editContact(Set<Contact> contacts) {
+        System.out.println("\n\n");
+        DataBase.printDataBase(contacts);
+
+        System.out.println("\n\n\n|  Enter the index of the contact you want to edit:");
+
+        boolean isInputInvalid = true;
+        boolean isBooleanTrue = true;
+        boolean isAnyError = false;
+        String input;
+        String Cname;
+        int nameLength;
+        int intInput = 0;
+        Contact contact;
+        List<Contact> contactList = new ArrayList<>();
+        Iterator<Contact> iterator = contacts.iterator();
+
+
+        for (int i = 0; i < contacts.size(); i++) {
+            contact = iterator.next();
+            contactList.add(contact);
+        }
+
+        do {
+            try {
+                do {
+                    if (isAnyError){
+                        System.out.print("|  Please enter a valid input: ");
+                    }
+                    else {
+                        System.out.print("|  Your answer: ");
+                    }
+                    input = scn.next();
+                    if (Integer.parseInt(input) > 0 && Integer.parseInt(input) <= contacts.size()) {
+                        isInputInvalid = false;
+                    } else {
+                        System.out.print("\n|  Please enter a valid input\n");
+                    }
+                }
+                while (isInputInvalid);
+                isAnyError = false;
+                intInput = Integer.parseInt(input);
+            } catch (NumberFormatException exception) {
+                isAnyError = true;
+            }
+        }
+        while (isAnyError);
+
+        contact = contactList.get(intInput - 1);
+
+        System.out.println("\n|  You have selected:");
+        Messages.printContactDetails(contact);
+
+        System.out.println("\n\n|  1. Edit this contact");
+        System.out.println("|  2. Select another contact");
+        System.out.print("|  Your answer: ");
+
+        isInputInvalid = true;
+
+        do {
+            input = scn.next();
+            if (input.equalsIgnoreCase("1") || input.equalsIgnoreCase("2")){
+                isInputInvalid = false;
+            }
+            else {
+                System.out.print("Please enter a valid input: ");
+            }
+        }
+        while (isInputInvalid);
+
+        if (input.equalsIgnoreCase("1")){
+            System.out.println("\n|  What do you want to edit?");
+            System.out.println("|  1. Name");
+            System.out.println("|  2. Phone Number");
+            System.out.println("|  3. Mail");
+            System.out.println("|  4. Adress");
+
+            System.out.print("|  Your answer: ");
+            isInputInvalid = true;
+            do {
+                input = scn.next();
+                if (input.equalsIgnoreCase("1") || input.equalsIgnoreCase("2")
+                    || input.equalsIgnoreCase("3") || input.equalsIgnoreCase("4")){
+                    isInputInvalid = false;
+                }
+                else {
+                    System.out.print("Please enter a valid input: ");
+                }
+            }
+            while (isInputInvalid);
+
+            switch (input){
+                case "1":
+                    EditContact.editName(contact);
+                    contacts.addAll(changeContact(intInput, contactList, contact));
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+            }
+        }
+        else {
+            editContact(contacts);
+        }
+
+        DataBase.printDataBase(contacts);
 
     }
+
+
 
     public static void addAContact() {
 
@@ -112,4 +207,17 @@ public class Options {
 
     }
 
+
+    public static Set<Contact> changeContact(int intInput, List<Contact> contactList, Contact contact){
+        Set<Contact> contacts = new HashSet<>();
+
+        contactList.remove(intInput - 1);
+        contactList.add(intInput - 1, contact);
+
+        System.out.println("\n\n\n\n");
+
+        contacts.addAll(contactList);
+
+        return contacts;
+    }
 }

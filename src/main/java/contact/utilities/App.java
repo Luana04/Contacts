@@ -31,7 +31,7 @@ public class App {
                 Options.seeDetails(contacts);
                 break;
             case "2":
-                Options.editContact();
+                Options.editContact(contacts);
                 break;
             case "3":
                 Options.addAContact();

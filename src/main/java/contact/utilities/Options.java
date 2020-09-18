@@ -91,7 +91,7 @@ public class Options {
         boolean isBooleanTrue = true;
         boolean isAnyError = false;
         String input;
-        String Cname;
+        String name;
         int nameLength;
         int intInput = 0;
         Contact contact;
